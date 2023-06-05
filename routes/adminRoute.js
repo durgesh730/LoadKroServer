@@ -56,6 +56,16 @@ router.delete("/driversAndTrucks/:id", async (req, res) => {
     }
 })
 
+router.delete("/deleteBookedVehicles/:id", async (req, res) => {
+    try {
+        const deleted = await Booking.findByIdAndDelete({ _id: req.params.id })
+        res.status(201).json(deleted);
+    } catch (error) {
+        console.error(error.message);
+        res.status(401).send("Some error occured")
+    }
+})
+
 router.get('/bookedVehiclesAdmin', async (req, res) => {
     try {
         const book = await Booking.find();

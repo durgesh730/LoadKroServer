@@ -121,7 +121,7 @@ router.post('/generateOTP', async (req, res) => {
 
 router.post("/sendMail", async (req, res) => {
     const { email, text, subject } = req.body;
-    console.log(req.body)
+    // console.log(req.body)
     var Useremail = {
         body: {
             intro: text || "Welcome to Loadkro",
@@ -132,7 +132,7 @@ router.post("/sendMail", async (req, res) => {
     let message = {
         from: " durgeshchaudhary020401@gmail.com",
         to: email,
-        subject: subject || "Signup Successfull",
+        subject: subject || "Successfull done",
         html: emailBody
     }
     transporter.sendMail(message)
@@ -141,28 +141,28 @@ router.post("/sendMail", async (req, res) => {
         })
 })
 
-// send Notification
+// // send Notification
 
-router.post("/sendMailnotification", async (req, res) => {
-    const { email, subject, text } = req.body;
-    var Useremail = {
-        body: {
-            intro: text || "Welcome to Loadkro",
-            outro: 'Need help, or have question? Just reply to this email'
-        }
-    }
-    var emailBody = MailGenerator.generate(Useremail);
-    let message = {
-        from: " durgeshchaudhary020401@gmail.com",
-        to: email,
-        subject: subject || "Signup Successfull",
-        html: emailBody
-    }
-    transporter.sendMail(message)
-        .then(() => {
-            return res.status(200).send({ msg: "You should receive an email from Us. " })
-        })
-})
+// router.post("/sendMailnotification", async (req, res) => {
+//     const { email, subject, text } = req.body;
+//     var Useremail = {
+//         body: {
+//             intro: text || "Welcome to Loadkro",
+//             outro: 'Need help, or have question? Just reply to this email'
+//         }
+//     }
+//     var emailBody = MailGenerator.generate(Useremail);
+//     let message = {
+//         from: " durgeshchaudhary020401@gmail.com",
+//         to: email,
+//         subject: subject || "Signup Successfull",
+//         html: emailBody
+//     }
+//     transporter.sendMail(message)
+//         .then(() => {
+//             return res.status(200).send({ msg: "You should receive an email from Us. " })
+//         })
+// })
 
 //Reset password using put
 
