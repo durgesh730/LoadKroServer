@@ -168,19 +168,23 @@ router.post("/sendMail", async (req, res) => {
 
 router.put('/resetPasword', async (req, res) => {
     const { email, password } = req.body;
-    try {
-        const find = await User.findOne({ email: email });
-        const salt = await bcrypt.genSalt(10);
-        const pass = await bcrypt.hash(password, salt);
-        if (find) {
-            const data = await User.findOneAndUpdate({ email: email }, { $set: { password: pass } }, { new: true })
-            res.status(201).send({ data })
-            console.log(data)
-        } else {
-            res.status(404).send({ msg: "Email is not found" })
+    if (!email) {
+        res.status(404).send({ msg: "Email is not found" });
+    } else {
+        try {
+            const find = await User.findOne({ email: email });
+            const salt = await bcrypt.genSalt(10);
+            const pass = await bcrypt.hash(password, salt);
+            if (find) {
+                const data = await User.findOneAndUpdate({ email: email }, { $set: { password: pass } }, { new: true })
+                res.status(201).send({ data })
+                console.log(data)
+            } else {
+                res.status(404).send({ msg: "Email is not found" })
+            }
+        } catch (error) {
+            res.status(404).send({ msg: "Some error occured" })
         }
-    } catch (error) {
-        res.status(404).send({ msg: "Some error occured" })
     }
 })
 
